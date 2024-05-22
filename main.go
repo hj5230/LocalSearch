@@ -8,18 +8,18 @@ import (
 )
 
 const (
-	contextLines      = 1
+	contextLines      = 1    // Showing lines before and after matches
 	sampleSize        = 1024 // Number of bytes to read for content detection
 	maxPrintableChars = 0.8  // Percentage threshold for printable characters to consider a file as a text file
 )
 
 func main() {
-	searchStr := flag.String("s", "", "搜索的字符串")
-	searchDir := flag.String("d", ".", "搜索的目录")
+	searchStr := flag.String("s", "", "String to search for")
+	searchDir := flag.String("d", ".", "Directory to search in")
 	flag.Parse()
 
 	if *searchStr == "" {
-		fmt.Println("请指定搜索的字符串")
+		fmt.Println("Please specify a string to search for")
 		os.Exit(1)
 	}
 
@@ -34,7 +34,7 @@ func main() {
 	})
 
 	if err != nil {
-		fmt.Printf("扫描目录出错: %v\n", err)
+		fmt.Printf("Error scanning directory: %v\n", err)
 		os.Exit(1)
 	}
 }
