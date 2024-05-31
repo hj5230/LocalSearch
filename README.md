@@ -1,5 +1,9 @@
 # LocalSearch
 
+## Introduction
+
+A lightweight, CLI based application for finding matching strings in speccified directory
+
 ## Develop Note
 
 ### Bugs to be fixed
