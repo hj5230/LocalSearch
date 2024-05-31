@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"io"
 	"os"
 	"path/filepath"
 )
@@ -14,12 +15,31 @@ const (
 )
 
 func main() {
+	helpFlag := flag.Bool("h", false, "Show help information")
 	searchStr := flag.String("s", "", "String to search for")
 	searchDir := flag.String("d", ".", "Directory to search in")
+
 	flag.Parse()
 
+	if *helpFlag {
+		file, err := os.Open("help")
+		if err != nil {
+			panic(err)
+		}
+
+		defer file.Close()
+
+		content, err := io.ReadAll(file)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Printf("\n%s\n", string(content))
+
+		os.Exit(0)
+	}
+
 	if *searchStr == "" {
-		fmt.Println("Please specify a string to search for")
+		fmt.Println("Specify a string to search for, or use flag -h for help.")
 		os.Exit(1)
 	}
 
