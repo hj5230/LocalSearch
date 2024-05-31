@@ -11,8 +11,7 @@ import (
 func searchFile(filePath, searchStr string) {
 	content, err := os.ReadFile(filePath)
 	if err != nil {
-		fmt.Printf("打开文件出错: %v\n", err)
-		return
+		panic(err)
 	}
 
 	if !isLikelyText(content) {

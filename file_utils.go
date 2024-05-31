@@ -49,7 +49,6 @@ func getLineContent(filePath string, lineNum int) string {
 func highlightMatch(line, searchStr string, lineNum int) string {
 	index := bytes.Index([]byte(line), []byte(searchStr))
 	if index != -1 {
-		// Calculate the number of characters before the actual line content
 		prefixLength := len(fmt.Sprintf("%d | ", lineNum))
 		highlight := strings.Repeat("^", utf8.RuneCountInString(searchStr))
 		return fmt.Sprintf("%s\n%s%s", line, strings.Repeat(" ", prefixLength+index), highlight)
