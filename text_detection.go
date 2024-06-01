@@ -1,29 +1,26 @@
 package main
 
 import (
-	"os"
 	"unicode"
 	"unicode/utf8"
 )
 
-// Contains functions for text file detection.
+// func isTextFile(filePath string) bool {
+// 	file, err := os.Open(filePath)
+// 	if err != nil {
+// 		return false
+// 	}
+// 	defer file.Close()
 
-func isTextFile(filePath string) bool {
-	file, err := os.Open(filePath)
-	if err != nil {
-		return false
-	}
-	defer file.Close()
+// 	buffer := make([]byte, sampleSize)
+// 	n, err := file.Read(buffer)
+// 	if err != nil && err.Error() != "EOF" {
+// 		return false
+// 	}
 
-	buffer := make([]byte, sampleSize)
-	n, err := file.Read(buffer)
-	if err != nil && err.Error() != "EOF" {
-		return false
-	}
-
-	buffer = buffer[:n]
-	return isLikelyText(buffer)
-}
+// 	buffer = buffer[:n]
+// 	return isLikelyText(buffer)
+// }
 
 func isLikelyText(buffer []byte) bool {
 	printableChars := 0
