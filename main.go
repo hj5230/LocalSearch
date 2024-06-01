@@ -6,6 +6,7 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 const (
@@ -14,8 +15,21 @@ const (
 	maxPrintableChars = 0.8  // Percentage threshold for printable characters to consider a file as a text file
 )
 
+type StringSlice []string
+
+func (s *StringSlice) String() string {
+	return strings.Join(*s, ",")
+}
+
+func (s *StringSlice) Set(value string) error {
+	*s = append(*s, value)
+	return nil
+}
+
 func main() {
 	helpFlag := flag.Bool("h", false, "Show help information")
+	var ignoreDirs StringSlice
+	flag.Var(&ignoreDirs, "i", "Directories to ignore (can be specified multiple times)")
 	searchStr := flag.String("s", "", "String to search for")
 	searchDir := flag.String("d", ".", "Directory to search in")
 
@@ -40,21 +54,34 @@ func main() {
 
 	if *searchStr == "" {
 		fmt.Println("Specify a string to search for, or use flag -h for help.")
-		os.Exit(1)
+		panic(1)
 	}
 
 	err := filepath.Walk(*searchDir, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			return err
 		}
-		if !info.IsDir() && isTextFile(path) {
+
+		for _, ignoreDir := range ignoreDirs {
+			if strings.Contains(path, ignoreDir) {
+				if info.IsDir() {
+					return filepath.SkipDir
+				}
+				return nil
+			}
+		}
+
+		// Temporarily removed the check for text files
+		// if !info.IsDir() && isTextFile(path) {
+		// 	searchFile(path, *searchStr)
+		// }
+		if !info.IsDir() {
 			searchFile(path, *searchStr)
 		}
 		return nil
 	})
 
 	if err != nil {
-		fmt.Printf("Error scanning directory: %v\n", err)
-		os.Exit(1)
+		panic(err)
 	}
 }
