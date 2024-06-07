@@ -47,7 +47,9 @@ func getLineContent(filePath string, lineNum int) string {
 }
 
 func highlightMatch(line, searchStr string, lineNum int) string {
+	tabs := strings.Count(line, "\t")
 	index := bytes.Index([]byte(line), []byte(searchStr))
+	index += tabs * 3
 	if index != -1 {
 		prefixLength := len(fmt.Sprintf("%d | ", lineNum))
 		highlight := strings.Repeat("^", utf8.RuneCountInString(searchStr))
