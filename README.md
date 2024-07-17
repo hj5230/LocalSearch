@@ -14,6 +14,7 @@ A lightweight, CLI based application for finding matching strings in speccified 
 	- utf8mb4 4 -> 2
 	- ...
 - ~~Heuristic algorithm unable to search some sort of text file, e.g. nohup.out~~
+- ~~error occurs when walking on symlink~~
 
 ### Features to be added
 
@@ -28,6 +29,10 @@ A lightweight, CLI based application for finding matching strings in speccified 
 - Allows printing of all results at once with flag `-a` (save to file with `>`)
 - Allows ignore with patterns like `*/` `**/`
 - When contextLines is `-1`, print entire file
+
+### Performance to be improved
+
+- Use multiple goroutine when directory have way too many chilren
 
 ### Documentation to be written
 
