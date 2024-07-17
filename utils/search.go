@@ -1,4 +1,4 @@
-package main
+package utils
 
 import (
 	"bufio"
@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 )
 
-func searchFile(filePath, searchStr string) {
+func SearchFile(filePath, searchStr string) {
 	content, err := os.ReadFile(filePath)
 	if err != nil {
 		panic(err)

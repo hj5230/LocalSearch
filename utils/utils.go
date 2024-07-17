@@ -1,4 +1,4 @@
-package main
+package utils
 
 import (
 	"bufio"
@@ -8,6 +8,10 @@ import (
 	"strings"
 	"unicode/utf8"
 )
+
+// func IsFile(info fs.FileInfo) bool {
+// 	return !info.IsDir() & info.Mode()
+// }
 
 func contains(s, substr string) bool {
 	return bytes.Contains([]byte(s), []byte(substr))
