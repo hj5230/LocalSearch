@@ -7,12 +7,8 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
-)
 
-const (
-	contextLines      = 1    // Showing lines before and after matches
-	sampleSize        = 1024 // Number of bytes to read for content detection
-	maxPrintableChars = 0.8  // Percentage threshold for printable characters to consider a file as a text file
+	"github.com/hj5230/LocalSearch/utils"
 )
 
 type StringSlice []string
@@ -75,8 +71,9 @@ func main() {
 		// if !info.IsDir() && isTextFile(path) {
 		// 	searchFile(path, *searchStr)
 		// }
-		if !info.IsDir() {
-			searchFile(path, *searchStr)
+
+		if !info.IsDir() && info.Mode()&os.ModeSymlink == 0 {
+			utils.SearchFile(path, *searchStr)
 		}
 		return nil
 	})
