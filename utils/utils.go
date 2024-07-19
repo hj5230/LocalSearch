@@ -18,16 +18,36 @@ func contains(s, substr string) bool {
 }
 
 func printContext(filePath string, matchedLineNum int, matchedLines map[int]string, searchStr string) {
-	startLine := matchedLineNum - contextLines
-	if startLine < 1 {
-		startLine = 1
-	}
-	endLine := matchedLineNum + contextLines
-	for i := startLine; i <= endLine; i++ {
-		if i == matchedLineNum {
-			fmt.Printf("%d | %s\n", i, highlightMatch(matchedLines[i], searchStr, i))
-		} else {
-			fmt.Printf("%d | %s\n", i, getLineContent(filePath, i))
+	if contextLines == -1 {
+		file, err := os.Open(filePath)
+		if err != nil {
+			return
+		}
+		defer file.Close()
+
+		scanner := bufio.NewScanner(file)
+		currentLine := 0
+		for scanner.Scan() {
+			currentLine++
+			line := scanner.Text()
+			if currentLine == matchedLineNum {
+				fmt.Printf("%d | %s\n", currentLine, highlightMatch(line, searchStr, currentLine))
+			} else {
+				fmt.Printf("%d | %s\n", currentLine, line)
+			}
+		}
+	} else {
+		startLine := matchedLineNum - contextLines
+		if startLine < 1 {
+			startLine = 1
+		}
+		endLine := matchedLineNum + contextLines
+		for i := startLine; i <= endLine; i++ {
+			if i == matchedLineNum {
+				fmt.Printf("%d | %s\n", i, highlightMatch(matchedLines[i], searchStr, i))
+			} else {
+				fmt.Printf("%d | %s\n", i, getLineContent(filePath, i))
+			}
 		}
 	}
 }
