@@ -28,7 +28,7 @@ A lightweight, CLI based application for finding matching strings in speccified 
 	- Allow using arrow keys to switch pages, i.e. `cat` styled
 - Allows printing of all results at once with flag `-a` (save to file with `>`)
 - Allows ignore with patterns like `*/` `**/`
-- When contextLines is `-1`, print entire file
+- ~~When contextLines is `-1`, print entire file~~
 
 ### Performance to be improved
 
